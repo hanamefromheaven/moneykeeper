@@ -76,17 +76,19 @@ async def main():
     client = TelegramClient("session", API_ID, API_HASH)
     await client.start()
 
+
+    source_entity = await client.get_entity(int(SOURCE_GROUP_ID))
     # Одна общая карта соответствий
     message_map = {}
 
     # Настройка всех клонеров
     cloners_config = [
-        {'source_topic': 126680, 'target_topic': 1},
-        {'source_topic': 282788, 'target_topic': 674},
-        {'source_topic': 279614, 'target_topic': 675},
-        {'source_topic': 279611, 'target_topic': 679},
-        {'source_topic': 297728, 'target_topic': 678},
-        {'source_topic': 126568, 'target_topic': 676},
+        {'source_topic': '1', 'target_topic': '1'},
+        {'source_topic': '282788', 'target_topic': '674'},
+        {'source_topic': '279614', 'target_topic': '675'},
+        {'source_topic': '279611', 'target_topic': '679'},
+        {'source_topic': '297728', 'target_topic': '678'},
+        {'source_topic': '126568', 'target_topic': '676'},
     ]
 
     cloners = [
@@ -94,7 +96,7 @@ async def main():
         for cfg in cloners_config
     ]
 
-    @client.on(events.NewMessage(chats=SOURCE_GROUP_ID))
+    @client.on(events.NewMessage(chats=source_entity))
     async def handle_new_message(event):
         msg = event.message
         for cloner in cloners:
