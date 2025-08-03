@@ -165,19 +165,28 @@ async def main():
     # Конфигурация для 6 веток
     cloners_config = [
         {
-            'source_topic': SOURCE_TOPIC_ID,
-            'target_topic': TARGET_TOPIC_ID
+            'source_topic': "126680",
+            'target_topic': "1"
         },
         {
-            'source_topic': '',
-            'target_topic': ''
+            'source_topic': "282788",
+            'target_topic': "674"
         },
         {
-            'source_topic': '',
-            'target_topic': ''
+            'source_topic': "279614",
+            'target_topic': "675"
         },
         {
-            
+            'source_topic': "279611",
+            'target_topic': "679"   
+        },
+        {
+            'source_topic': "297728",
+            'target_topic': "678"
+        },
+        {
+            'source_topic': "126568",
+            'target_topic': "676"
         }
     ]
     
