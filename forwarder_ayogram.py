@@ -202,13 +202,13 @@ async def main():
 
     # ОБНОВЛЕННАЯ КОНФИГУРАЦИЯ
     cloners_config = [
-        # Клонер для топика 2 → топик 1
-        {'source_topic': 2, 'target_topic': 1},
-        # Клонер для топика 1 → топик 674  
-        {'source_topic': 1, 'target_topic': 674},
-        # НОВЫЙ: Клонер для общих сообщений → топик (например)
-        {'source_topic': None, 'target_topic': 1},  # Общие сообщения → топик 1
-    ]
+        {'source_topic': 282788, 'target_topic': 674},
+        {'source_topic': 279614, 'target_topic': 675},
+        {'source_topic': 279611, 'target_topic': 679},
+        {'source_topic': 297728, 'target_topic': 678},
+        {'source_topic': 126568, 'target_topic': 676},
+        {'source_topic': 126680, 'target_topic': 753}
+     ]
 
     cloners = []
     for cfg in cloners_config:
