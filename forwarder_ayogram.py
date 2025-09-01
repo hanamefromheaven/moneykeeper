@@ -202,12 +202,12 @@ async def main():
 
     # ОБНОВЛЕННАЯ КОНФИГУРАЦИЯ
     cloners_config = [
-        {'source_topic': 282788, 'target_topic': 674},
-        {'source_topic': 279614, 'target_topic': 675},
-        {'source_topic': 279611, 'target_topic': 679},
-        {'source_topic': 297728, 'target_topic': 678},
-        {'source_topic': 126568, 'target_topic': 676},
-        {'source_topic': 126680, 'target_topic': 753}
+        {'source_topic': 674, 'target_topic': 12},
+        {'source_topic': 675, 'target_topic': 10},
+        {'source_topic': 679, 'target_topic': 8},
+        {'source_topic': 678, 'target_topic': 6},
+        {'source_topic': 676, 'target_topic': 4},
+        {'source_topic': 753, 'target_topic': 2}
      ]
 
     cloners = []
@@ -233,6 +233,22 @@ async def main():
             except Exception as e:
                 logger.error(f"❌ Error in cloner {i+1}: {e}")
                 print(f"❌ Cloner {i+1} error: {e}")
+    @client.on(events.MessageEdited(chats=source_entity))
+    async def handle_edited_message(event):
+        msg = event.message
+        target_msg_id = message_map.get(msg.id)
+        print(f"✏️ EDITED MESSAGE: {msg.id}")
+
+        if not target_msg_id:
+            logger.info(f"⚠️ Edited message {msg.id} не имеет копии, пропускаем")
+            return
+
+        try:
+            await client.edit_message(TARGET_GROUP_ID, target_msg_id, msg.message or "")        
+                # Редактируем уже пересланное сообщение                await client.edit_message(TARGET_GROUP_ID, target_msg_id, msg.message or "")
+            logger.info(f"✅ Обновил сообщение {msg.id} → {target_msg_id}")
+        except Exception as e:
+                logger.error(f"❌ Ошибка при обновлении {msg.id}: {e}")
 
     logger.info("✅ Message handler registered")
     print("🎯 Bot is ready!")
