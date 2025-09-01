@@ -202,12 +202,13 @@ async def main():
 
     # ОБНОВЛЕННАЯ КОНФИГУРАЦИЯ
     cloners_config = [
-        {'source_topic': 674, 'target_topic': 12},
-        {'source_topic': 675, 'target_topic': 10},
-        {'source_topic': 679, 'target_topic': 8},
-        {'source_topic': 678, 'target_topic': 6},
-        {'source_topic': 676, 'target_topic': 4},
-        {'source_topic': 753, 'target_topic': 2}
+        {'source_topic': os.getenv("source_topic_1"), 'target_topic': os.getenv("target_topic_1")},
+        {'source_topic': os.getenv("source_topic_2"), 'target_topic': os.getenv("target_topic_2")},
+        {'source_topic': os.getenv("source_topic_3"), 'target_topic': os.getenv("target_topic_3")},
+        {'source_topic': os.getenv("source_topic_4"), 'target_topic': os.getenv("target_topic_4")},
+        {'source_topic': os.getenv("source_topic_5"), 'target_topic': os.getenv("target_topic_5")},
+        {'source_topic': os.getenv("source_topic_6"), 'target_topic': os.getenv("target_topic_6")},
+
      ]
 
     cloners = []
