@@ -6,9 +6,8 @@ from telethon.tl.types import Message, DocumentAttributeFilename
 from telethon.errors import FloodWaitError
 from config import API_ID, API_HASH, SOURCE_GROUP_ID, TARGET_GROUP_ID
 
-# Максимальный уровень логирования
 logging.basicConfig(
-    level=logging.INFO,  # Уменьшил для читаемости
+    level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
@@ -234,6 +233,7 @@ async def main():
             except Exception as e:
                 logger.error(f"❌ Error in cloner {i+1}: {e}")
                 print(f"❌ Cloner {i+1} error: {e}")
+                
     @client.on(events.MessageEdited(chats=source_entity))
     async def handle_edited_message(event):
         msg = event.message
