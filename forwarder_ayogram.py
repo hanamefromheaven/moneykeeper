@@ -60,14 +60,12 @@ class ThreadCloner:
         logger.info(f"✅ PROCESSING message {message.id}")
         print(f"📨 Cloning message: {message.message[:50] if message.message else '[Media]'}")
 
-        # Определяем reply_to для клонированного сообщения
         reply_to_msg_id = None
         if message.reply_to and message.reply_to.reply_to_msg_id:
             source_reply_id = message.reply_to.reply_to_msg_id
             reply_to_msg_id = self.message_map.get(source_reply_id)
             logger.info(f"🔗 Reply mapping: {source_reply_id} → {reply_to_msg_id}")
 
-        # Подготовка параметров отправки
         kwargs = {
             'entity': TARGET_GROUP_ID,
             'message': message.message or '',
@@ -75,22 +73,17 @@ class ThreadCloner:
             'link_preview': False,
         }
 
-        # Настройка отправки в топик или общий чат
         if reply_to_msg_id:
-            # Если это ответ на другое сообщение
             kwargs['reply_to'] = reply_to_msg_id
             logger.info(f"📤 Will reply to message: {reply_to_msg_id}")
         elif self.target_topic_id:
-            # Отправляем в конкретный топик
             kwargs['reply_to'] = self.target_topic_id
             logger.info(f"📤 Will send to topic: {self.target_topic_id}")
         else:
-            # Отправляем в общий чат (без reply_to)
             logger.info(f"📤 Will send to general chat")
 
         logger.info(f"📦 Send kwargs: {kwargs}")
 
-        # Обработка медиа
         downloaded = None
         if message.media:
             logger.info(f"🖼️ Processing media for message {message.id}")
@@ -120,7 +113,6 @@ class ThreadCloner:
                 logger.error(f"❌ Media download failed for message {message.id}: {e}")
                 kwargs['message'] = '(Media unavailable)'
 
-        # Отправка сообщения
         try:
             logger.info(f"🚀 SENDING MESSAGE...")
             sent = await client.send_message(**kwargs)
@@ -159,7 +151,6 @@ async def main():
     logger.info(f"👤 Logged in as: {me.first_name} (@{me.username})")
     print(f"👤 Logged in as: {me.first_name} (@{me.username})")
 
-    # Проверяем исходную группу
     logger.info(f"🔍 Resolving SOURCE_GROUP_ID: {SOURCE_GROUP_ID}")
     try:
         source_entity = await client.get_entity(SOURCE_GROUP_ID)
@@ -178,7 +169,6 @@ async def main():
         print(f"❌ Cannot access source group: {e}")
         return
 
-    # Проверяем целевую группу
     logger.info(f"🔍 Resolving TARGET_GROUP_ID: {TARGET_GROUP_ID}")
     try:
         target_entity = await client.get_entity(TARGET_GROUP_ID)
@@ -199,7 +189,6 @@ async def main():
 
     message_map = {}
 
-    # ОБНОВЛЕННАЯ КОНФИГУРАЦИЯ
     cloners_config = [
         {'source_topic': os.getenv("source_topic_1"), 'target_topic': os.getenv("target_topic_1")},
         {'source_topic': os.getenv("source_topic_2"), 'target_topic': os.getenv("target_topic_2")},
