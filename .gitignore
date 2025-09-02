@@ -1,4 +1,6 @@
-venv
+.venv
 **/*.session
 .env
 __pycache__
+uv.lock
+.python-version
