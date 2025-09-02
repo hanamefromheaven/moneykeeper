@@ -1,7 +1,7 @@
 [project]
 name = "moneykeeper"
 version = "0.1.0"
-description = "Add your description here"
+description = "haha =)"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
